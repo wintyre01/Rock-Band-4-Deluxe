@@ -137,11 +137,12 @@
 #define RB4DXGP_DATA
 (
    {if_else {$this in_song}
-      {if_else {|| {! {get_plugin_var saving}} $calibrationmode $precisionmode}
+      {if_else {|| {! {file_exists "saving.ini"}} $calibrationmode $precisionmode}
          {$this setup_confirm_actions a 
             (
                "Enter Calibration Numbers"
                {if_else $tiltsens "Increased Tilt Sensitivity: ON" "Increased Tilt Sensitivity: OFF"}
+               {if_else $nolanes "No Lanes: ON" "No Lanes: OFF"}
                {if_else $nood "Overdrive Gain: OFF" "Overdrive Gain: ON"}
                {if_else $practiceod "OD in Practice: ON" "OD in Practice: OFF"}
                {if_else $syncspeeds "Sync Difficulty Speeds: ON" "Sync Difficulty Speeds: OFF"}
@@ -152,6 +153,7 @@
          {$this setup_confirm_actions a 
             (
                {if_else $tiltsens "Increased Tilt Sensitivity: ON" "Increased Tilt Sensitivity: OFF"}
+               {if_else $nolanes "No Lanes: ON" "No Lanes: OFF"}
                {if_else $nood "Overdrive Gain: OFF" "Overdrive Gain: ON"}
                {if_else $practiceod "OD in Practice: ON" "OD in Practice: OFF"}
                {if_else $syncspeeds "Sync Difficulty Speeds: ON" "Sync Difficulty Speeds: OFF"}
@@ -165,6 +167,7 @@
             {if_else $instafail "Insta Fail: ON" "Insta Fail: OFF"}
             {if_else $toughcrowd "Tough Crowd: ON" "Tough Crowd: OFF"}
             {if_else $tiltsens "Increased Tilt Sensitivity: ON" "Increased Tilt Sensitivity: OFF"}
+            {if_else $nolanes "No Lanes: ON" "No Lanes: OFF"}
             {if_else $nood "Overdrive Gain: OFF" "Overdrive Gain: ON"}
             {if_else $practiceod "OD in Practice: ON" "OD in Practice: OFF"}
             {if_else $syncspeeds "Sync Difficulty Speeds: ON" "Sync Difficulty Speeds: OFF"}
@@ -327,6 +330,26 @@
                {dx_file_delete "settings/gameplay/tiltsens.dta"}
             }
             {$this show_state dxState_DelayedEffectWarn}
+            {$this trigger_select_effects}
+         )
+         (("No Lanes: ON" "No Lanes: OFF")
+            {set $nolanes {! $nolanes}}
+            {if_else $nolanes
+               {do
+                  {dx_write_null_file "settings/gameplay/nolanes.dta"}
+                  ENABLE_NOLANES
+                  {dx_write_null_file "ps4/track/guitar/guitar_roll_lane_unlit.entity_ps4"}
+               }
+               {do
+                  {dx_file_delete "settings/gameplay/nolanes.dta"}
+                  DISABLE_NOLANES
+                  {dx_file_delete "ps4/track/guitar/guitar_roll_lane_unlit.entity_ps4"}
+               }
+            }
+            {if_else {$this in_song}
+               {$this show_state dxState_InGameWarn}
+               RB4DXGP_DATA
+            }
             {$this trigger_select_effects}
          )
       }
@@ -539,10 +562,8 @@
             "Select Venue"
             {if_else $60fpsbg "60 FPS Venues: ON" "60 FPS Venues: OFF"}
             {if_else $crowdmeter "Crowd Meter: OFF" "Crowd Meter: ON"}
-            ;{if_else $noui "HUD: OFF" "HUD: ON"}
             "HUD..."
             {if_else $nohud "Performance Mode: ON" "Performance Mode: OFF"}
-            ;"Song Title..."
             "Overshell Theme"
          )
       }
@@ -555,24 +576,38 @@
                {if_else $crowdmeter "Crowd Meter: OFF" "Crowd Meter: ON"}
                "HUD..."
                {if_else $nohud "Performance Mode: ON" "Performance Mode: OFF"}
-               ;"Song Title..."
+               {if_else {get_plugin_var origininsongsel} "Show Game Origin in Music Library: ON" "Show Game Origin in Music Library: OFF"}
                "Overshell Theme"
-               {if_else $nvidiaoverride "Fix Nvidia Driver Crash: ON" "Fix Nvidia Driver Crash: OFF"}
+               {if_else $nvidiaoverride "Fix GPU Driver Crash: ON" "Fix GPU Driver Crash: OFF"}
                {if_else $menubg "Static Menu BG: ON" "Static Menu BG: OFF"}
             )
          }
-
-         {$this setup_confirm_actions a 
-            (
-               "Select Venue"
-               {if_else $60fpsbg "60 FPS Venues: ON" "60 FPS Venues: OFF"}
-               {if_else $crowdmeter "Crowd Meter: OFF" "Crowd Meter: ON"}
-               "HUD..."
-               {if_else $nohud "Performance Mode: ON" "Performance Mode: OFF"}
-               ;"Song Title..."
-               "Overshell Theme"
-               {if_else $menubg "Static Menu BG: ON" "Static Menu BG: OFF"}
-            )
+         {if_else {is_neo}
+            {$this setup_confirm_actions a 
+               (
+                  "Select Venue"
+                  "Set Resolution"
+                  {if_else $60fpsbg "60 FPS Venues: ON" "60 FPS Venues: OFF"}
+                  {if_else $crowdmeter "Crowd Meter: OFF" "Crowd Meter: ON"}
+                  "HUD..."
+                  {if_else $nohud "Performance Mode: ON" "Performance Mode: OFF"}
+                  {if_else {get_plugin_var origininsongsel} "Show Game Origin in Music Library: ON" "Show Game Origin in Music Library: OFF"}
+                  "Overshell Theme"
+                  {if_else $menubg "Static Menu BG: ON" "Static Menu BG: OFF"}
+               )
+            }
+            {$this setup_confirm_actions a 
+               (
+                  "Select Venue"
+                  {if_else $60fpsbg "60 FPS Venues: ON" "60 FPS Venues: OFF"}
+                  {if_else $crowdmeter "Crowd Meter: OFF" "Crowd Meter: ON"}
+                  "HUD..."
+                  {if_else $nohud "Performance Mode: ON" "Performance Mode: OFF"}
+                  {if_else {get_plugin_var origininsongsel} "Show Game Origin in Music Library: ON" "Show Game Origin in Music Library: OFF"}
+                  "Overshell Theme"
+                  {if_else $menubg "Static Menu BG: ON" "Static Menu BG: OFF"}
+               )
+            }
          }
       }
    }
@@ -609,6 +644,15 @@
             {$this show_state dxState_DelayedEffectWarn}
             {$this trigger_select_effects}
          )
+         (("Show Game Origin in Music Library: ON" "Show Game Origin in Music Library: OFF")
+            {set_plugin_var origininsongsel {! {get_plugin_var origininsongsel}}}
+            {if_else {get_plugin_var origininsongsel}
+               {dx_write_null_file "settings/visuals/origininsongsel.dta"}
+               {dx_file_delete "settings/visuals/origininsongsel.dta"}
+            }
+            RB4DXVIS_DATA
+            {$this trigger_select_effects}
+         )
          (("Crowd Meter: ON" "Crowd Meter: OFF")
             {set $crowdmeter {! $crowdmeter}}
             {if_else $crowdmeter
@@ -630,7 +674,7 @@
          ("HUD..."
             {$this show_state dxState_HUDElements}
          )
-         (("Fix Nvidia Driver Crash: ON" "Fix Nvidia Driver Crash: OFF")
+         (("Fix GPU Driver Crash: ON" "Fix GPU Driver Crash: OFF")
             {set $nvidiaoverride {! $nvidiaoverride}}
             {if_else $nvidiaoverride
                {do
@@ -731,24 +775,47 @@
 (dxState_ResolutionSelector
    (view {$this get_auto_list_view})
    (enter
-      {$this setup_confirm_actions a
-         (
-            1024x576
-            1280x720
-            1366x768
-            1536x864
-            1600x900
-            1920x1080
-            2048x1152
-            2560x1440
-            3k
-            4k
-         )
+      {if_else {is_neo}
+         {$this setup_confirm_actions a
+            (
+               1920x1080
+               2048x1152
+               2560x1440
+               3k
+               4k
+            )
+         }
+         {$this setup_confirm_actions a
+            (
+               1024x576
+               1280x720
+               1366x768
+               1536x864
+               1600x900
+               1920x1080
+               2048x1152
+               2560x1440
+               3k
+               4k
+            )
+         }
       }
    )
    (SELECT_MSG
       {local $list_data {($objId UIListCom) get_data_in_column token}}
       {dx_file_rmdir "settings/resolution"}
+      {if {file_exists "settings/resolution/enabled.dta"} ; backup reset resolution if rmdir fails
+         {dx_file_delete "settings/resolution/enabled.dta"}
+         {dx_file_delete "settings/resolution/1024x576.dta"}
+         {dx_file_delete "settings/resolution/1280x720.dta"}
+         {dx_file_delete "settings/resolution/1366x768.dta"}
+         {dx_file_delete "settings/resolution/1536x864.dta"}
+         {dx_file_delete "settings/resolution/1600x900.dta"}
+         {dx_file_delete "settings/resolution/2048x1152.dta"}
+         {dx_file_delete "settings/resolution/2560x1440.dta"}
+         {dx_file_delete "settings/resolution/3264x1836.dta"}
+         {dx_file_delete "settings/resolution/3840x2160.dta"}
+      }
       {dx_file_mkdir "settings/resolution"}
       {switch $list_data
          (1024x576

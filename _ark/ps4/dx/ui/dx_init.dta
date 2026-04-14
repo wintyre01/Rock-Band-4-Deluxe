@@ -13,6 +13,7 @@
 ;gp settings
 {set $instafail {file_exists "settings/gameplay/instafail.dta"}}
 {set $nood {file_exists "settings/gameplay/nood.dta"}}
+{set $nolanes {file_exists "settings/gameplay/nolanes.dta"}}
 {set $practiceod {file_exists "settings/gameplay/practiceod.dta"}}
 {set $syncspeeds {file_exists "settings/gameplay/syncspeeds.dta"}}
 {set $tiltsens {file_exists "settings/gameplay/tiltsens.dta"}}
@@ -20,6 +21,7 @@
 ;visual settings
 {set $blackbg {file_exists "settings/visuals/blackbg.dta"}}
 {set $60fpsbg {file_exists "settings/visuals/60fpsbg.dta"}}
+{set_plugin_var origininsongsel {file_exists "settings/visuals/origininsongsel.dta"}}
 {set $micwarn {file_exists "settings/visuals/micwarn.dta"}}
 
 ;mtv settings
