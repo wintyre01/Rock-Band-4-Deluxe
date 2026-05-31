@@ -223,22 +223,22 @@ UPDATE_SETTINGS
 }
 {cond
 	({&& {file_exists "settings/visuals/trackangle.dta"} {file_exists "settings/visuals/trackanglerr.dta"} {dx_file_exists "ps4/track/guitar_unlit_rr.scene_ps4"}}
-		{if_else {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
-			{dx_file_delete "ps4/track/guitar_unlit_rr.scene_ps4"}
-			{dx_file_rename "ps4/track/guitar_unlit_rr.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
+		{if {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
+			{dx_file_delete "ps4/track/guitar_unlit.scene_ps4"}
 		}
+		{dx_file_copy "ps4/track/guitar_unlit_rr.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
 	)
     ({&& {file_exists "settings/visuals/trackangle.dta"} {file_exists "settings/visuals/trackanglerb2.dta"} {dx_file_exists "ps4/track/guitar_unlit_rb2.scene_ps4"}}
-        {if_else {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
-			{dx_file_delete "ps4/track/guitar_unlit_rb2.scene_ps4"}
-			{dx_file_rename "ps4/track/guitar_unlit_rb2.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
+      {if {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
+			{dx_file_delete "ps4/track/guitar_unlit.scene_ps4"}
 		}
+		{dx_file_copy "ps4/track/guitar_unlit_rb2.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
     )
     ({&& {file_exists "settings/visuals/trackangle.dta"} {file_exists "settings/visuals/trackanglerb3.dta"} {dx_file_exists "ps4/track/guitar_unlit_rb3.scene_ps4"}}
-        {if_else {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
-			{dx_file_delete "ps4/track/guitar_unlit_rb3.scene_ps4"}
-			{dx_file_rename "ps4/track/guitar_unlit_rb3.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
+      {if {dx_file_exists "ps4/track/guitar_unlit.scene_ps4"}
+			{dx_file_delete "ps4/track/guitar_unlit.scene_ps4"}
 		}
+		{dx_file_copy "ps4/track/guitar_unlit_rb3.scene_ps4" "ps4/track/guitar_unlit.scene_ps4"}
     )
 }
 
@@ -331,6 +331,10 @@ UPDATE_SETTINGS
 }
 {if {dx_file_exists "ps4/ui_prerivals"}
 	{file_rmdir "/data/GoldHEN/RB4DX/ps4/ui_prerivals"}
+}
+
+{if {dx_file_exists "ps4/dx/custom_sounds/shell_music/rock band 4 (1.08).bank"}
+	{dx_file_delete "ps4/dx/custom_sounds/shell_music/rock band 4 (1.08).bank"}
 }
 
 {if {is_emu}
