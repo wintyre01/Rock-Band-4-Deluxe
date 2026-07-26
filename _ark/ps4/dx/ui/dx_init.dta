@@ -2,7 +2,7 @@
 
 {set_plugin_var speedmod 100}
 {set $pracspeed 100}
-{set_practice_speed {/ $pracspeed 100}}
+{replace_float "/data/GoldHEN/RB4DX/ps4/dx/track/practice_speed.dta_dta_ps4" 57 {/ $pracspeed 100}}
 {set $dx_initialized TRUE}
 {set $calibrationmode FALSE}
 {set $track_curve 1}
@@ -25,6 +25,25 @@
 {set_plugin_var player_intros {file_exists "settings/visuals/playerintros.dta"}}
 {set_plugin_var origininsongsel {file_exists "settings/visuals/origininsongsel.dta"}}
 {set $micwarn {file_exists "settings/visuals/micwarn.dta"}}
+{set $noflames {file_exists "settings/visuals/noflames.dta"}}
+{set $strikelineglow {file_exists "settings/visuals/strikelineglow.dta"}}
+{if_else $strikelineglow
+   {do
+      ENABLE_NOGLOW
+   }
+   {do
+      DISABLE_NOGLOW
+   }
+}
+{set $strikelinebounce {file_exists "settings/visuals/strikelinebounce.dta"}}
+{if_else $strikelinebounce
+   {do
+      ENABLE_NO_SL_BOUNCE
+   }
+   {do
+      DISABLE_NO_SL_BOUNCE
+   }
+}
 
 ;mtv settings
 {set $songtitle {file_exists "settings/visuals/songtitle.dta"}}
@@ -341,7 +360,7 @@ SET_PAD_BINDING_VAR
    {set $beatlinealpha {dx_read_file_as_float "settings/theme/beatlinealpha.dta"}}
 }
 
-{write_beatline_file $beatlinealpha}
+{replace_float "/data/GoldHEN/RB4DX/ps4/track/shared/fret_unlit.entity_ps4" 1594 $beatlinealpha}
 
 
 {if {is_emu}
