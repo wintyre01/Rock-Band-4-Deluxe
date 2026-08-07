@@ -196,6 +196,10 @@ UPDATE_SETTINGS
 	   {dx_file_copy "ps4/track/drums/gem_unlit1_reset.sgraph_ps4ps4" "ps4/track/drums/gem_unlit1.sgraph_ps4ps4"}
 	}
 }
+{if_else {&& {file_exists "settings/visuals/norails.dta"} {! {dx_file_exists "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}}}
+	{dx_write_null_file "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}
+	{dx_file_delete "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}
+}
 {if {file_exists "settings/visuals/noflames.dta"}
 	{dx_file_delete "ps4/track/shared/fx/flash_pot/particle_smoke.bmp_ps4"}
    {dx_file_copy "ps4/track/shared/fx/flash_pot/particle_smoke_noflames.bmp_ps4" "ps4/track/shared/fx/flash_pot/particle_smoke.bmp_ps4"}

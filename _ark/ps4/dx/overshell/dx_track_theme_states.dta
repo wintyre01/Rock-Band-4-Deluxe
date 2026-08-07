@@ -22,6 +22,7 @@
       {push_back $dxsettings {if_else $noshine "Highway Shine: OFF" "Highway Shine: ON"}}
       {push_back $dxsettings {if_else $gemshine "Gem Shine: OFF" "Gem Shine: ON"}}
       {push_back $dxsettings {if_else {get_plugin_var gemcolors} "Custom Gem Colors: ON" "Custom Gem Colors: OFF"}}
+      {push_back $dxsettings {if_else $norails "Highway Sides: OFF" "Highway Sides: ON"}}
       {push_back $dxsettings "Vocal Notes"}
       {push_back $dxsettings "Vocal Arrows"}
       {$this setup_confirm_actions a $dxsettings}
@@ -33,6 +34,7 @@
       {set $noshine {dx_file_exists "ps4/track/shared/track_skin_swap.sgraph_ps4ps4"}}
       {set $gemshine {dx_file_exists "ps4/track/guitar/gem_unlit.sgraph_ps4ps4"}}
       {set_plugin_var gemcolors {file_exists "settings/theme/gem/colors/enabled.dta"}}
+      {set $norails {dx_file_exists "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}}
       {set $dx_cur_state thm}
       RB4DXTHM_DATA
       {set $slider_selected FALSE}
@@ -42,6 +44,24 @@
    (SELECT_MSG 
       {local $list_data {($objId UIListCom) get_data_in_column token}}  
       {switch $list_data 
+         (("Highway Sides: OFF" "Highway Sides: ON")
+            {set $norails {! $norails}}
+            {if_else $norails
+               {do
+                  {dx_write_null_file "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}
+                  {dx_write_null_file "settings/visuals/norails.dta"}
+               }
+               {do
+                  {dx_file_delete "ps4/track/smasher/fretboard.fbx++mesh++fretboard_rails_ps4"}
+                  {dx_file_delete "settings/visuals/norails.dta"}
+               }
+            }
+            {if_else {$this in_song}
+               {$this show_state dxState_InGameWarn}
+               RB4DXTHM_DATA
+            }
+            {$this trigger_select_effects}
+         )
          (("Highway Shine: ON" "Highway Shine: OFF")
             {set $noshine {! $noshine}}
             {if_else $noshine
