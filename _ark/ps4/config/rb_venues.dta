@@ -1,60 +1,78 @@
 #define VENUE_SELECT
 (
-   {cond
-      ({file_exists "settings/venue/none.dta"}
-         ui/shared/fake_bg.scene
-      )
-      ({file_exists "settings/venue/big_club_toys.dta"}
-         venue/big_club/big_club_toys/big_club_toys.scene
-      )
-      ({file_exists "settings/venue/big_club_standard.dta"}
-         venue/big_club/big_club_standard/big_club_standard.scene
-      )
-      ({file_exists "settings/venue/big_club_industrial.dta"}
-         venue/big_club/big_club_industrial/big_club_industrial.scene
-      )
-      ({file_exists "settings/venue/big_club_gym.dta"}
-         venue/big_club/big_club_gym/big_club_gym.scene
-      )
-      ({file_exists "settings/venue/big_club_arcade.dta"}
-         venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
-      )
-      ({file_exists "settings/venue/big_club_arcade_empty.dta"}
-         venue/big_club/big_club_arcade/big_club_arcade.scene
-      )
-      ({file_exists "settings/venue/big_club_boat.dta"}
-         venue/big_club/big_club_boat/big_club_boat.scene
-      )
-      ({file_exists "settings/venue/big_club_desert.dta"}
-         venue/big_club/big_club_desert/big_club_desert.scene
-      )
-      ({file_exists "settings/venue/big_club_practice.dta"}
-         venue/practice_mode/big_club_practice.scene
-      )
-      ({file_exists "settings/venue/small_club_vwhall.dta"}
-         venue/small_club/small_club_vwhall/small_club_vwhall.scene
-      )
-      ({file_exists "settings/venue/small_club_basement.dta"}
-         venue/small_club/small_club_basement/small_club_basement.scene
-      )
-      ({file_exists "settings/venue/small_club_industrial.dta"}
-         venue/small_club/small_club_industrial/small_club_industrial.scene
-      )
-      ({file_exists "settings/venue/small_club_roadhouse.dta"}
-         venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
-      )
-      ({file_exists "settings/venue/small_club_trashed.dta"}
-         venue/small_club/small_club_trashed/small_club_trashed.scene
-      )
-      ({file_exists "settings/venue/arena.dta"}
-         venue/arena/arena_standard/arena_standard.scene
-      )
-   }
+   ({file_exists "settings/venue/none.dta"}
+      ui/shared/fake_bg.scene
+   )
+   ({file_exists "settings/venue/big_club_toys.dta"}
+      venue/big_club/big_club_toys/big_club_toys.scene
+   )
+   ({file_exists "settings/venue/big_club_standard.dta"}
+      venue/big_club/big_club_standard/big_club_standard.scene
+   )
+   ({file_exists "settings/venue/big_club_industrial.dta"}
+      venue/big_club/big_club_industrial/big_club_industrial.scene
+   )
+   ({file_exists "settings/venue/big_club_gym.dta"}
+      venue/big_club/big_club_gym/big_club_gym.scene
+   )
+   ({file_exists "settings/venue/big_club_arcade.dta"}
+      venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+   )
+   ({file_exists "settings/venue/big_club_arcade_empty.dta"}
+      venue/big_club/big_club_arcade/big_club_arcade.scene
+   )
+   ({file_exists "settings/venue/big_club_boat.dta"}
+      venue/big_club/big_club_boat/big_club_boat.scene
+   )
+   ({file_exists "settings/venue/big_club_desert.dta"}
+      venue/big_club/big_club_desert/big_club_desert.scene
+   )
+   ({file_exists "settings/venue/big_club_practice.dta"}
+      venue/practice_mode/big_club_practice.scene
+   )
+   ({file_exists "settings/venue/small_club_vwhall.dta"}
+      venue/small_club/small_club_vwhall/small_club_vwhall.scene
+   )
+   ({file_exists "settings/venue/small_club_basement.dta"}
+      venue/small_club/small_club_basement/small_club_basement.scene
+   )
+   ({file_exists "settings/venue/small_club_industrial.dta"}
+      venue/small_club/small_club_industrial/small_club_industrial.scene
+   )
+   ({file_exists "settings/venue/small_club_roadhouse.dta"}
+      venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
+   )
+   ({file_exists "settings/venue/small_club_trashed.dta"}
+      venue/small_club/small_club_trashed/small_club_trashed.scene
+   )
+   ({file_exists "settings/venue/arena.dta"}
+      venue/arena/arena_standard/arena_standard.scene
+   )
 )
 (venues 
    (big_club_toys
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_basement/small_club_basement.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_toys/big_club_toys.scene
       }
       kLargeClub
@@ -62,7 +80,27 @@
    ) 
    (big_club_standard
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_industrial/small_club_industrial.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_standard/big_club_standard.scene
       }
       kLargeClub
@@ -70,7 +108,27 @@
    ) 
    (big_club_industrial
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond 
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_industrial/big_club_industrial.scene
       }
       kLargeClub
@@ -78,7 +136,27 @@
    ) 
    (big_club_gym
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_trashed/small_club_trashed.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_gym/big_club_gym.scene
       }
       kLargeClub
@@ -86,7 +164,27 @@
    ) 
    (big_club_arcade
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_vwhall/small_club_vwhall.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
       }
       kLargeClub
@@ -94,7 +192,27 @@
    ) 
    (big_club_arcade_terry
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_basement/small_club_basement.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_arcade/big_club_arcade.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_arcade/big_club_arcade.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_arcade/big_club_arcade.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_arcade_full_crowd/big_club_arcade_full_crowd.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_arcade/big_club_arcade.scene
       }
       kLargeClub
@@ -102,7 +220,27 @@
    ) 
    (big_club_boat
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond 
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_boat/big_club_boat.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_industrial/small_club_industrial.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_boat/big_club_boat.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_boat/big_club_boat.scene
       }
       kLargeClub
@@ -110,7 +248,27 @@
    ) 
    (big_club_desert
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            VENUE_SELECT
+         }
          venue/big_club/big_club_desert/big_club_desert.scene
       }
       kLargeClub
@@ -118,7 +276,27 @@
    ) 
    (small_club_vwhall
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/small_club/small_club_vwhall/small_club_vwhall.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_vwhall/small_club_vwhall.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_toys/big_club_toys.scene
+            )
+            VENUE_SELECT
+         }
          venue/small_club/small_club_vwhall/small_club_vwhall.scene
       }
       kSmallClub
@@ -126,7 +304,27 @@
    ) 
    (small_club_basement
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/small_club/small_club_basement/small_club_basement.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_basement/small_club_basement.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            VENUE_SELECT
+         }
          venue/small_club/small_club_basement/small_club_basement.scene
       }
       kSmallClub
@@ -134,7 +332,27 @@
    ) 
    (small_club_industrial
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/small_club/small_club_industrial/small_club_industrial.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_industrial/small_club_industrial.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_industrial/big_club_industrial.scene
+            )
+            VENUE_SELECT
+         }
          venue/small_club/small_club_industrial/small_club_industrial.scene
       }
       kSmallClub
@@ -142,7 +360,27 @@
    ) 
    (small_club_roadhouse
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_gym/big_club_gym.scene
+            )
+            VENUE_SELECT
+         }
          venue/small_club/small_club_roadhouse/small_club_roadhouse.scene
       }
       kSmallClub
@@ -150,7 +388,27 @@
    ) 
    (small_club_trashed
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/small_club/small_club_trashed/small_club_trashed.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_trashed/small_club_trashed.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/big_club/big_club_desert/big_club_desert.scene
+            )
+            VENUE_SELECT
+         }
          venue/small_club/small_club_trashed/small_club_trashed.scene
       }
       kSmallClub
@@ -158,7 +416,27 @@
    ) 
    (arena
       {if_else {file_exists "settings/venue/enabled.dta"}
-         VENUE_SELECT
+         {cond
+            ({file_exists "settings/venue/random_full.dta"}
+               venue/arena/arena_standard/arena_standard.scene
+            )
+            ({file_exists "settings/venue/small_venues.dta"}
+               venue/small_club/small_club_trashed/small_club_trashed.scene
+            )
+            ({file_exists "settings/venue/big_venues.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/big_venues_emu.dta"}
+               venue/big_club/big_club_standard/big_club_standard.scene
+            )
+            ({file_exists "settings/venue/random_emu.dta"}
+               venue/arena/arena_standard/arena_standard.scene
+            )
+            ({file_exists "settings/venue/random_full_emu.dta"}
+               venue/arena/arena_standard/arena_standard.scene
+            )
+            VENUE_SELECT
+         }
          venue/arena/arena_standard/arena_standard.scene
       }
       kArena

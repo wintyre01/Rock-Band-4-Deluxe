@@ -665,7 +665,7 @@
             os_venue
             {if_else $60fpsbg os_venuefps_60 os_venuefps_30}
             {if_else {get_plugin_var noshake} os_camera_shake_off os_camera_shake_on}
-            {if_else {get_plugin_var player_intros} player_intros_on player_intros_off}
+            {if_else {get_plugin_var player_intros} os_player_intros_on os_player_intros_off}
             {if_else $crowdmeter os_crowdmeter_off os_crowdmeter_on}
             os_hud_theme
             {if_else $nohud os_nohud_on os_nohud_off}
@@ -679,7 +679,7 @@
                os_resolution
                {if_else $60fpsbg os_venuefps_60 os_venuefps_30}
                {if_else {get_plugin_var noshake} os_camera_shake_off os_camera_shake_on}
-               {if_else {get_plugin_var player_intros} player_intros_on player_intros_off}
+               {if_else {get_plugin_var player_intros} os_player_intros_on os_player_intros_off}
                {if_else $crowdmeter os_crowdmeter_off os_crowdmeter_on}
                os_hud_theme
                {if_else $nohud os_nohud_on os_nohud_off}
@@ -696,7 +696,7 @@
                   os_resolution
                   {if_else $60fpsbg os_venuefps_60 os_venuefps_30}
                   {if_else {get_plugin_var noshake} os_camera_shake_off os_camera_shake_on}
-                  {if_else {get_plugin_var player_intros} player_intros_on player_intros_off}
+                  {if_else {get_plugin_var player_intros} os_player_intros_on os_player_intros_off}
                   {if_else $crowdmeter os_crowdmeter_off os_crowdmeter_on}
                   os_hud_theme
                   {if_else $nohud os_nohud_on os_nohud_off}
@@ -710,7 +710,7 @@
                   os_venue
                   {if_else $60fpsbg os_venuefps_60 os_venuefps_30}
                   {if_else {get_plugin_var noshake} os_camera_shake_off os_camera_shake_on}
-                  {if_else {get_plugin_var player_intros} player_intros_on player_intros_off}
+                  {if_else {get_plugin_var player_intros} os_player_intros_on os_player_intros_off}
                   {if_else $crowdmeter os_crowdmeter_off os_crowdmeter_on}
                   os_hud_theme
                   {if_else $nohud os_nohud_on os_nohud_off}
@@ -746,7 +746,7 @@
             {$this show_state dxState_ResolutionSelector}
             {$this trigger_select_effects}
          )
-         ((player_intros_on player_intros_off)
+         ((os_player_intros_on os_player_intros_off)
             {set_plugin_var player_intros {! {get_plugin_var player_intros}}}
             {if_else {get_plugin_var player_intros}
                {dx_write_null_file "settings/visuals/playerintros.dta"}
@@ -1230,26 +1230,48 @@
 (dxState_VenueSelector
    (view {$this get_auto_list_view})
    (enter
-      {$this setup_confirm_actions a
-         (
-            os_random
-            os_static_bg
-            big_club_toys
-            big_club_standard
-            big_club_industrial
-            big_club_gym
-            big_club_arcade
-            big_club_arcade_empty
-            big_club_boat
-            big_club_desert
-            small_club_vwhall
-            small_club_basement
-            small_club_industrial
-            small_club_roadhouse
-            small_club_trashed
-            arena
-            big_club_practice
-         )
+      {if_else {is_emu}
+         {$this setup_confirm_actions a
+            (
+               os_random
+               random_full_emu
+               os_static_bg
+               big_venues_emu
+               big_club_toys
+               big_club_standard
+               big_club_industrial
+               big_club_gym
+               big_club_arcade
+               big_club_arcade_empty
+               big_club_desert
+               arena
+               big_club_practice
+            )
+         }
+         {$this setup_confirm_actions a
+            (
+               os_random
+               random_full
+               os_static_bg
+               big_venues
+               big_club_toys
+               big_club_standard
+               big_club_industrial
+               big_club_gym
+               big_club_arcade
+               big_club_arcade_empty
+               big_club_boat
+               big_club_desert
+               small_venues
+               small_club_vwhall
+               small_club_basement
+               small_club_industrial
+               small_club_roadhouse
+               small_club_trashed
+               arena
+               big_club_practice
+            )
+         }
       }
    )
    (SELECT_MSG
@@ -1266,7 +1288,10 @@
                {$this show_state dxState_StaticBackgroudSelector}
             )
             (os_random
-               {dx_file_delete "settings/venue/enabled.dta"}
+               {if_else {is_emu}
+                  {dx_write_null_file "settings/venue/random_emu.dta"}
+                  {dx_file_delete "settings/venue/enabled.dta"}
+               }
             )
          }
          {dx_write_null_file {sprint "settings/venue/" $list_data ".dta"}}

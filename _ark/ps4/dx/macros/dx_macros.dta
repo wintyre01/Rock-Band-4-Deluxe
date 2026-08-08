@@ -42,6 +42,12 @@
 	{dx_file_delete "settings/venue/small_club_roadhouse.dta"}
 	{dx_file_delete "settings/venue/small_club_trashed.dta"}
 	{dx_file_delete "settings/venue/arena.dta"}
+	{dx_file_delete "settings/venue/random_full.dta"}
+	{dx_file_delete "settings/venue/random_emu.dta"}
+	{dx_file_delete "settings/venue/big_venues.dta"}
+	{dx_file_delete "settings/venue/random_full_emu.dta"}
+	{dx_file_delete "settings/venue/big_venues_emu.dta"}
+	{dx_file_delete "settings/venue/small_venues.dta"}
 )
 
 #define ENABLE_INSTA_FAIL
