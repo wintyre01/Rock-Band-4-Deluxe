@@ -167,7 +167,6 @@
    {push_back $dxsettings {sprintf {localize os_rb4_drums_cal} {* {get_plugin_var rb4_drums_extra_lag} -1}}}
    {push_back $dxsettings {sprintf {localize os_gh_drums_cal} {* {get_plugin_var gh_drums_extra_lag} -1}}}
    {push_back $dxsettings {sprintf {localize os_rr_drums_cal} {* {get_plugin_var rr_drums_extra_lag} -1}}}
-   {push_back $dxsettings {sprintf {localize os_mpa_drums_cal} {* {get_plugin_var mpa_drums_extra_lag} -1}}}
    {push_back $dxsettings "  "}
    {$this setup_confirm_actions a $dxsettings}
 )
@@ -207,9 +206,6 @@
       ("Rock Revolution Drums"
          {set_plugin_var rr_drums_extra_lag 26}
       )
-      ("MIDI Pro Adapter Drums"
-         {set_plugin_var mpa_drums_extra_lag 26}
-      )
    }
 )
 #define PER_CONTROLLER_CALIBRATION_SAVE
@@ -248,9 +244,6 @@
       ("Rock Revolution Drums"
          {write_file "data:/GoldHEN/RB4DX/settings/calibration/rr_drums.dta" {array ({get_plugin_var rr_drums_extra_lag})}}
       )
-      ("MIDI Pro Adapter Drums"
-         {write_file "data:/GoldHEN/RB4DX/settings/calibration/mpa_drums.dta" {array ({get_plugin_var mpa_drums_extra_lag})}}
-      )
    }
 )
 
@@ -278,7 +271,6 @@
             {set_plugin_var rb4_drums_extra_lag 26}
             {set_plugin_var gh_drums_extra_lag 26}
             {set_plugin_var rr_drums_extra_lag 26}
-            {set_plugin_var mpa_drums_extra_lag 26}
             PER_CONTROLLER_CALIBRATION_DATA
          )
          (os_all_offsets_custom_optimal
@@ -293,7 +285,6 @@
             {set_plugin_var rb4_drums_extra_lag 6}
             {set_plugin_var gh_drums_extra_lag -2}
             {set_plugin_var rr_drums_extra_lag -2}
-            {set_plugin_var mpa_drums_extra_lag -2}
             PER_CONTROLLER_CALIBRATION_DATA
          )
          ({sprintf {localize os_dualshock_cal} {* {get_plugin_var pad_extra_lag} -1}}
@@ -390,15 +381,6 @@
             {if_else $slider_selected
                {do
                   {set $selected_pad_type "Rock Revolution Drums"}
-                  {$this show_tooltip}
-               }
-               {$this hide_tooltip}
-            }
-         )
-         ({sprintf {localize os_mpa_drums_cal} {* {get_plugin_var mpa_drums_extra_lag} -1}}
-            {if_else $slider_selected
-               {do
-                  {set $selected_pad_type "MIDI Pro Adapter Drums"}
                   {$this show_tooltip}
                }
                {$this hide_tooltip}
@@ -557,23 +539,10 @@
                   {set $setting_focus TRUE}
                   {$ui_list set_focus_by_data dx_index 12}
                )
-               ("MIDI Pro Adapter Drums"
-                  {if_else {== $list_data {sprintf {localize os_rr_drums_cal} {* {get_plugin_var rr_drums_extra_lag} -1}}} ;up
-                     {unless {< {- {get_plugin_var mpa_drums_extra_lag} 1} -1000}
-                        {set_plugin_var mpa_drums_extra_lag {- {get_plugin_var mpa_drums_extra_lag} 1}}
-                     }
-                     {unless {> {+ {get_plugin_var mpa_drums_extra_lag} 1} 1000}
-                        {set_plugin_var mpa_drums_extra_lag {+ {get_plugin_var mpa_drums_extra_lag} 1}}
-                     }
-                  }
-                  PER_CONTROLLER_CALIBRATION_DATA
-                  {set $setting_focus TRUE}
-                  {$ui_list set_focus_by_data dx_index 13}
-               )
             }
          }
          {if {== $list_data "  "}
-            {$ui_list set_focus_by_data dx_index 13}
+            {$ui_list set_focus_by_data dx_index 12}
          }
       }
    )
@@ -638,11 +607,6 @@
                         {set_plugin_var rr_drums_extra_lag {- {get_plugin_var rr_drums_extra_lag} 1}}
                      }
                   )
-                  ({sprintf {localize os_mpa_drums_cal} {* {get_plugin_var mpa_drums_extra_lag} -1}}
-                     {unless {< {- {get_plugin_var mpa_drums_extra_lag} 1} -1000}
-                        {set_plugin_var mpa_drums_extra_lag {- {get_plugin_var mpa_drums_extra_lag} 1}}
-                     }
-                  )
                }
                {switch $list_data
                   ({sprintf {localize os_dualshock_cal} {* {get_plugin_var pad_extra_lag} -1}}
@@ -698,11 +662,6 @@
                   ({sprintf {localize os_rr_drums_cal} {* {get_plugin_var rr_drums_extra_lag} -1}}
                      {unless {> {+ {get_plugin_var rr_drums_extra_lag} 1} 1000}
                         {set_plugin_var rr_drums_extra_lag {+ {get_plugin_var rr_drums_extra_lag} 1}}
-                     }
-                  )
-                  ({sprintf {localize os_mpa_drums_cal} {* {get_plugin_var mpa_drums_extra_lag} -1}}
-                     {unless {> {+ {get_plugin_var mpa_drums_extra_lag} 1} 1000}
-                        {set_plugin_var mpa_drums_extra_lag {+ {get_plugin_var mpa_drums_extra_lag} 1}}
                      }
                   )
                }
